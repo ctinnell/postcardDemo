@@ -15,10 +15,18 @@ class ViewController: UIViewController {
     @IBOutlet weak var postcard: UIImageView!
     @IBOutlet weak var colorSelection: UICollectionView!
     
+    var image: UIImage?
+    var topText = "Visit London"
+    var bottomText = "Home of Sherlock Holmes, Paddington Bear, and James Bond"
+    var topFontName = "Helvetica Neue"
+    var bottomFontName = "Helvetica Neue"
+    var topColor = UIColor.white
+    var bottomColor = UIColor.white
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureColors()
-        
+        renderPostcard()
     }
 
     override func didReceiveMemoryWarning() {
@@ -34,6 +42,34 @@ class ViewController: UIViewController {
                 colors.append(color)
             }
         }
+    }
+    
+    private func renderPostcard() {
+        let drawRect = CGRect(x: 0, y: 0, width: 3000, height: 2400)
+        
+        let topTextRect = CGRect(x: 250, y: 200, width: 2500, height: 800)
+        let bottomTextRect = CGRect(x: 250, y: 1800, width: 2500, height: 600)
+        
+        let topFont = UIFont(name: topFontName, size: 350) ?? UIFont.systemFont(ofSize: 250)
+        let bottomFont = UIFont(name: bottomFontName, size: 150) ?? UIFont.systemFont(ofSize: 100)
+
+        let centered = NSMutableParagraphStyle()
+        centered.alignment = .center
+        
+        let topTextAttributes : [NSAttributedStringKey: Any] = [.foregroundColor: topColor, .font: topFont, .paragraphStyle: centered]
+        let bottomTextAttributes : [NSAttributedStringKey: Any] = [.foregroundColor: bottomColor, .font: bottomFont, .paragraphStyle: centered]
+        
+        let renderer = UIGraphicsImageRenderer(size: drawRect.size)
+        postcard.image = renderer.image(actions: { (ctx) in
+            UIColor.gray.set()
+            ctx.fill(drawRect)
+            
+            image?.draw(at: CGPoint(x: 0, y: 0))
+            
+            topText.draw(in: topTextRect, withAttributes: topTextAttributes)
+            bottomText.draw(in: bottomTextRect, withAttributes: bottomTextAttributes)
+        })
+
     }
     
 }
