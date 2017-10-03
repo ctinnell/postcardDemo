@@ -46,12 +46,10 @@ extension ViewController:UICollectionViewDelegate, UICollectionViewDataSource
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
         cell.backgroundColor = colors[indexPath.row]
         cell.layer.borderWidth = 1
         cell.layer.cornerRadius = 5
         return cell
-        
     }
 }
