@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FontsViewController: UIViewController {
+class FontsViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
