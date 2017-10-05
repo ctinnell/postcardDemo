@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MobileCoreServices
 
 class FontsViewController: UITableViewController {
 
@@ -14,6 +15,7 @@ class FontsViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.dragDelegate = self
     }
 
     override func didReceiveMemoryWarning() {
@@ -38,5 +40,17 @@ class FontsViewController: UITableViewController {
         
         return cell
     }
+    
+}
+
+extension FontsViewController: UITableViewDragDelegate {
+    func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        let string = fonts[indexPath.row]
+        guard let data = string.data(using: .utf8) else { return [] }
+        
+        let itemProvider = NSItemProvider(item: data as NSData, typeIdentifier: kUTTypePlainText as String)
+        return [UIDragItem(itemProvider: itemProvider)]
+    }
+    
     
 }

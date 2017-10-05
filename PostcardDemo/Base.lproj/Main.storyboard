@@ -21,9 +21,13 @@
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="uAF-Dr-EMq">
                                 <rect key="frame" x="20" y="253" width="728" height="582"/>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="uAF-Dr-EMq" secondAttribute="height" multiplier="1:0.8" id="9A0-Ln-Hdd"/>
                                 </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="Ybn-wx-t91" appends="YES" id="pQo-Bf-Q8Q"/>
+                                </connections>
                             </imageView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="PdC-Xi-T7W">
                                 <rect key="frame" x="4" y="964" width="760" height="50"/>
@@ -74,6 +78,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oky-v3-neF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="Ybn-wx-t91">
+                    <connections>
+                        <action selector="changeText:" destination="ON7-Zh-LUw" id="r2K-Vc-axm"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="961" y="78"/>
         </scene>
