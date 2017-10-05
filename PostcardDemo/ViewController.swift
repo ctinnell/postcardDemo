@@ -9,8 +9,17 @@
 import UIKit
 
 class ViewController: UIViewController {
-
-    var colors = [UIColor]()
+    
+    lazy var colors: [UIColor] = {
+        var colors: [UIColor] =  [.black, .gray, .white, .orange, .red, .magenta, .purple, .blue, .cyan, .green]
+        for i in 0...9 {
+            for j in 1...10 {
+                let color = UIColor(hue: CGFloat(i) / 10, saturation: CGFloat(j) / 10, brightness: 1, alpha: 1)
+                colors.append(color)
+            }
+        }
+        return colors
+    }()
     
     @IBOutlet weak var postcard: UIImageView!
     @IBOutlet weak var colorSelection: UICollectionView!
@@ -25,23 +34,12 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureColors()
         renderPostcard()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    private func configureColors() {
-        colors += [.black, .gray, .white, .orange, .red, .magenta, .purple, .blue, .cyan, .green]
-        for i in 0...9 {
-            for j in 1...10 {
-                let color = UIColor(hue: CGFloat(i) / 10, saturation: CGFloat(j) / 10, brightness: 1, alpha: 1)
-                colors.append(color)
-            }
-        }
     }
     
     private func renderPostcard() {
@@ -78,7 +76,6 @@ extension ViewController:UICollectionViewDelegate, UICollectionViewDataSource
 {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return colors.count
-        
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
