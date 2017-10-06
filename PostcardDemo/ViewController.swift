@@ -39,6 +39,11 @@ class ViewController: UIViewController {
         postcard.isUserInteractionEnabled = true
         let dropInteraction = UIDropInteraction(delegate: self)
         postcard.addInteraction(dropInteraction)
+        
+        let dragInteraction = UIDragInteraction(delegate: self)
+        postcard.addInteraction(dragInteraction)
+        title = "Postcard"
+        splitViewController?.view.backgroundColor = UIColor.lightGray
         renderPostcard()
     }
 
@@ -137,6 +142,14 @@ extension ViewController: UIDropInteractionDelegate {
                 self.renderPostcard()
             })
         }
+        else if session.hasItemsConforming(toTypeIdentifiers: [kUTTypeImage as String]) {
+            //handle dragged images
+            session.loadObjects(ofClass: UIImage.self, completion: { (items) in
+                guard let draggedImage = items.first as? UIImage else { return }
+                self.image = draggedImage
+                self.renderPostcard()
+            })
+        }
         else {
             //handle colors
             session.loadObjects(ofClass: UIColor.self, completion: { (items) in
@@ -150,6 +163,16 @@ extension ViewController: UIDropInteractionDelegate {
                 self.renderPostcard()
             })
         }
+    }
+}
+
+extension ViewController: UIDragInteractionDelegate {
+    func dragInteraction(_ interaction: UIDragInteraction, itemsForBeginning session: UIDragSession) -> [UIDragItem] {
+        guard let image = postcard.image else { return [] }
+        let provider = NSItemProvider(object: image)
+        let item = UIDragItem(itemProvider: provider)
+        
+        return [item]
     }
 }
 
